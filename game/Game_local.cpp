@@ -4482,3 +4482,27 @@ void idGameLocal::DeactivateSecretAreas( int areanum ) {
 		}
 	}
 }
+
+bool idGameLocal::InGameGuiActive()
+{
+	if( GetLocalPlayer() && GetLocalPlayer()->GuiActive())
+		return true;
+	else
+		return false;
+}
+
+bool idGameLocal::ObjectiveSystemActive()
+{
+	if( GetLocalPlayer() && GetLocalPlayer()->objectiveSystemOpen)
+		return true;
+	else
+		return false;
+}
+
+bool idGameLocal::InCinematic()
+{
+	if( inCinematic )
+		return true;
+	else
+		return false;
+}
