@@ -4368,3 +4368,28 @@ idGameLocal::GetMapLoadingGUI
 ===============
 */
 void idGameLocal::GetMapLoadingGUI( char gui[ MAX_STRING_CHARS ] ) { }
+
+
+bool idGameLocal::InGameGuiActive()
+{
+	if( GetLocalPlayer() && GetLocalPlayer()->GuiActive())
+		return true;
+	else
+		return false;
+}
+
+bool idGameLocal::ObjectiveSystemActive()
+{
+	if( GetLocalPlayer() && GetLocalPlayer()->objectiveSystemOpen)
+		return true;
+	else
+		return false;
+}
+
+bool idGameLocal::InCinematic()
+{
+	if( inCinematic )
+		return true;
+	else
+		return false;
+}
