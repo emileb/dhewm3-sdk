@@ -340,6 +340,12 @@ public:
 	virtual bool			InGameGuiActive();
 	virtual bool			InCinematic();
 	virtual bool			ObjectiveSystemActive();
+
+
+#ifdef AIM_ASSIST
+	virtual void			GetAimAssistAngles( idAngles & angles );
+	virtual float			GetAimAssistSensitivity();
+#endif
 	// ---------------------- Public idGameLocal Interface -------------------
 
 	void					Printf( const char *fmt, ... ) const id_attribute((format(printf,2,3)));
