@@ -4520,3 +4520,24 @@ bool idGameLocal::InCinematic()
 	else
 		return false;
 }
+
+
+#ifdef AIM_ASSIST
+/*
+========================
+idGameLocal::GetAimAssistAngles
+========================
+*/
+void idGameLocal::GetAimAssistAngles( idAngles & angles ) {
+	angles.Zero();
+}
+
+/*
+========================
+idGameLocal::GetAimAssistSensitivity
+========================
+*/
+float idGameLocal::GetAimAssistSensitivity() {
+	return 1;
+}
+#endif
