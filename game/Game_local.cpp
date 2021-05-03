@@ -265,7 +265,7 @@ idGameLocal::Init
   initialize the game object, only happens once at startup, not each level load
 ============
 */
-void idGameLocal::Init( void ) {
+void idGameLocal::Init( int gameType ) {
 	const idDict *dict;
 	idAAS *aas;
 
