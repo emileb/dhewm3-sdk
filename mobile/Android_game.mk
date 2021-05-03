@@ -11,7 +11,7 @@ $(LOCAL_PATH)/mobile \
 $(LOCAL_PATH)/game \
 
 
-LOCAL_CPPFLAGS :=  -DGAME_DLL -DAIM_ASSIST -fPIC
+LOCAL_CPPFLAGS :=  -DGAME_DLL -DAIM_ASSIST  -DD3_OSTYPE=\"ANDROID\" -DD3_ARCH=\"ARM\" -fPIC
 
 LOCAL_CPPFLAGS += -std=gnu++11 -D__DOOM_DLL__ -frtti -fexceptions  -Wno-error=format-security
 
