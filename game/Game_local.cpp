@@ -4483,30 +4483,22 @@ void idGameLocal::DeactivateSecretAreas( int areanum ) {
 	}
 }
 
-bool idGameLocal::InGameGuiActive()
+#ifdef __ANDROID__
+int idGameLocal::GetExtraData( ExtraData cmd )
 {
-	if( GetLocalPlayer() && GetLocalPlayer()->GuiActive())
-		return true;
-	else
-		return false;
-}
+	switch (cmd)
+	{
+		case GET_GUI_ACTIVE:
+			return !!( GetLocalPlayer() && GetLocalPlayer()->GuiActive() );
+		case GET_IN_CINEMATIC:
+			return inCinematic;
+		case GET_OBJECTIVE_ACTIVE:
+			return !!( GetLocalPlayer() && GetLocalPlayer()->objectiveSystemOpen );
+	}
 
-bool idGameLocal::ObjectiveSystemActive()
-{
-	if( GetLocalPlayer() && GetLocalPlayer()->objectiveSystemOpen)
-		return true;
-	else
-		return false;
+	return -1;
 }
-
-bool idGameLocal::InCinematic()
-{
-	if( inCinematic )
-		return true;
-	else
-		return false;
-}
-
+#endif
 
 #ifdef AIM_ASSIST
 /*

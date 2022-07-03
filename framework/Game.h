@@ -31,6 +31,7 @@ If you have questions concerning this license or the applicable additional terms
 
 #include "idlib/BitMsg.h"
 #include "idlib/Dict.h"
+#include "idlib/containers/StrList.h"
 #include "framework/UsercmdGen.h"
 #include "renderer/RenderWorld.h"
 #include "sound/sound.h"
@@ -80,7 +81,7 @@ public:
 	virtual						~idGame() {}
 
 	// Initialize the game for the first time.
-	virtual void				Init( int gameType ) = 0;
+	virtual void				Init( int gameMod ) = 0;
 
 	// Shut down the entire game.
 	virtual void				Shutdown( void ) = 0;
@@ -197,10 +198,15 @@ public:
 
 	virtual void				GetMapLoadingGUI( char gui[ MAX_STRING_CHARS ] ) = 0;
 
-	// Added by Emile
-	virtual bool				InGameGuiActive() = 0;
-	virtual bool			    InCinematic() = 0;
-	virtual bool			    ObjectiveSystemActive() = 0;
+#ifdef __ANDROID__
+	enum ExtraData
+	{
+		GET_GUI_ACTIVE,
+		GET_IN_CINEMATIC,
+		GET_OBJECTIVE_ACTIVE,
+	};
+	virtual int					GetExtraData( ExtraData cmd ) = 0;
+#endif
 
 #ifdef AIM_ASSIST
 	// compute an angle offset to be applied to the given client's aim
@@ -243,6 +249,11 @@ enum {
 
 class idEntity;
 class idMD5Anim;
+class idThread;
+class function_t;
+class idProgram;
+class idInterpreter;
+typedef struct prstack_s prstack_t;
 
 // FIXME: this interface needs to be reworked but it properly separates code for the time being
 class idGameEdit {
@@ -305,7 +316,7 @@ public:
 	virtual void				EntitySetColor( idEntity *ent, const idVec3 color );
 
 	// Player methods.
-	virtual bool				PlayerIsValid() const;
+	virtual bool				PlayerIsValid( ) const;
 	virtual void				PlayerGetOrigin( idVec3 &org ) const;
 	virtual void				PlayerGetAxis( idMat3 &axis ) const;
 	virtual void				PlayerGetViewAngles( idAngles &angles ) const;
@@ -321,10 +332,43 @@ public:
 	virtual int					MapGetEntitiesMatchingClassWithString( const char *classname, const char *match, const char *list[], const int max ) const;
 	virtual void				MapRemoveEntity( const char *name ) const;
 	virtual void				MapEntityTranslate( const char *name, const idVec3 &v ) const;
-
 };
 
 extern idGameEdit *				gameEdit;
+
+// In game script Debugging Support
+class idGameEditExt : public idGameEdit {
+public:
+	virtual						~idGameEditExt( void ) { }
+	// IdProgram
+	virtual void				GetLoadedScripts( idStrList ** result );
+	virtual bool				IsLineCode( const char* filename, int linenumber) const;
+	virtual const char *		GetFilenameForStatement( idProgram* program, int index ) const;
+	virtual int					GetLineNumberForStatement( idProgram* program, int index ) const;
+
+	// idInterpreter
+	virtual bool				CheckForBreakPointHit( const idInterpreter* interpreter, const function_t* function1, const function_t* function2, int depth ) const;
+	virtual bool				ReturnedFromFunction( const idProgram* program, const idInterpreter* interpreter, int index ) const;
+	virtual bool				GetRegisterValue( const idInterpreter* interpreter, const char* name, idStr& out, int scopeDepth ) const;
+	virtual const idThread*		GetThread( const idInterpreter* interpreter ) const;
+	virtual int					GetInterpreterCallStackDepth( const idInterpreter* interpreter );
+	virtual const function_t*	GetInterpreterCallStackFunction( const idInterpreter* interpreter, int stackDepth = -1 );
+
+	// IdThread
+	virtual const char *		ThreadGetName( const idThread* thread ) const;
+	virtual int					ThreadGetNum( const idThread* thread ) const;
+	virtual bool				ThreadIsDoneProcessing( const idThread* thread ) const;
+	virtual bool				ThreadIsWaiting( const idThread* thread ) const;
+	virtual bool				ThreadIsDying( const idThread* thread ) const;
+	virtual int					GetTotalScriptThreads( ) const;
+	virtual const idThread*		GetThreadByIndex( int index ) const;
+
+	// MSG helpers
+	virtual void				MSG_WriteThreadInfo( idBitMsg* msg, const idThread* thread, const idInterpreter* interpreter );
+	virtual void				MSG_WriteCallstackFunc( idBitMsg* msg, const prstack_t* stack, const idProgram* program, int instructionPtr );
+	virtual void				MSG_WriteInterpreterInfo( idBitMsg* msg, const idInterpreter* interpreter, const idProgram* program, int instructionPtr );
+	virtual void				MSG_WriteScriptList( idBitMsg* msg );
+};
 
 
 /*

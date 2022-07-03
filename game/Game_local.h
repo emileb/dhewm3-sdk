@@ -337,10 +337,10 @@ public:
 	virtual void			SwitchTeam( int clientNum, int team );
 
 	virtual bool			DownloadRequest( const char *IP, const char *guid, const char *paks, char urls[ MAX_STRING_CHARS ] );
-	virtual bool			InGameGuiActive();
-	virtual bool			InCinematic();
-	virtual bool			ObjectiveSystemActive();
 
+#ifdef __ANDROID__
+	virtual int				GetExtraData( ExtraData cmd );
+#endif
 
 #ifdef AIM_ASSIST
 	virtual void			GetAimAssistAngles( idAngles & angles );
