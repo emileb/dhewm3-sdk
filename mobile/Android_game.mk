@@ -11,21 +11,21 @@ $(LOCAL_PATH)/mobile \
 $(LOCAL_PATH)/game \
 
 
-LOCAL_CPPFLAGS :=  -DGAME_DLL -DAIM_ASSIST  -DD3_OSTYPE=\"ANDROID\" -DD3_ARCH=\"ARM\" -fPIC
+LOCAL_CPPFLAGS :=  -DGAME_DLL -DAIM_ASSIST  -DD3_OSTYPE=\"ANDROID\" -DD3_ARCH=\"ARM\" -DBUILD_IS_BIG_ENDIAN=0 -fPIC
 
-LOCAL_CPPFLAGS += -std=gnu++11 -D__DOOM_DLL__ -frtti -fexceptions  -Wno-error=format-security
+ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
+    LOCAL_CPPFLAGS += -DD3_SIZEOFPTR=8
+endif
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+    LOCAL_CPPFLAGS += -DD3_SIZEOFPTR=4
+endif
 
-
-LOCAL_CPPFLAGS += -Wno-sign-compare \
-                  -Wno-switch \
-                  -Wno-format-security \
+LOCAL_CPPFLAGS += -std=gnu++11 -D__DOOM_DLL__ -frtti -fexceptions
+LOCAL_CPPFLAGS += -Wno-sign-compare  -Wno-switch  -Wno-format-security -Wunsupported-floating-point-opt  -Wno-error=format-security -fsigned-char
 
 
 # Not avaliable in Android untill N
 LOCAL_CFLAGS := -DIOAPI_NO_64
-
-LOCAL_CFLAGS +=  -fno-unsafe-math-optimizations -fno-strict-aliasing -fno-math-errno -fno-trapping-math -fsigned-char
-
 
 src_idlib = \
 	idlib/bv/Bounds.cpp \
