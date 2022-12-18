@@ -6,6 +6,8 @@
 
 #define BUILD_LIBRARY_SUFFIX	"/libd3es_cdoom.so"
 
+#define BUILD_IS_BIG_ENDIAN 0
+
 #define BUILD_LIBDIR			"."
 #define BUILD_DATADIR			"."
 

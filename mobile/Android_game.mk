@@ -11,7 +11,7 @@ $(LOCAL_PATH)/mobile \
 $(LOCAL_PATH)/game \
 
 
-LOCAL_CPPFLAGS :=  -DGAME_DLL -DAIM_ASSIST  -DD3_OSTYPE=\"ANDROID\" -DD3_ARCH=\"ARM\" -DBUILD_IS_BIG_ENDIAN=0 -fPIC
+LOCAL_CPPFLAGS :=  -DGAME_DLL -DAIM_ASSIST  -DD3_OSTYPE=\"ANDROID\" -DD3_ARCH=\"ARM\" -fPIC
 
 ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
     LOCAL_CPPFLAGS += -DD3_SIZEOFPTR=8
@@ -20,11 +20,10 @@ ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
     LOCAL_CPPFLAGS += -DD3_SIZEOFPTR=4
 endif
 
-LOCAL_CPPFLAGS += -std=gnu++11 -D__DOOM_DLL__ -frtti -fexceptions
-LOCAL_CPPFLAGS += -Wno-sign-compare  -Wno-switch  -Wno-format-security -Wunsupported-floating-point-opt  -Wno-error=format-security -fsigned-char
+LOCAL_CPPFLAGS += -std=gnu++11 -D__DOOM_DLL__ -fexceptions
+LOCAL_CPPFLAGS += -fvisibility=hidden -Wno-sign-compare  -Wno-switch  -Wno-format-security -Wunsupported-floating-point-opt  -Wno-error=format-security -fsigned-char
 
-
-# Not avaliable in Android untill N
+# Not available in Android until N
 LOCAL_CFLAGS := -DIOAPI_NO_64
 
 src_idlib = \
@@ -154,5 +153,8 @@ LOCAL_SRC_FILES = $(src_idlib) $(src_game)
 LOCAL_SHARED_LIBRARIES := saffal
 LOCAL_STATIC_LIBRARIES :=
 LOCAL_LDLIBS :=
+
+LOCAL_CFLAGS += -fvisibility=hidden -fdata-sections -ffunction-sections  -fPIC
+LOCAL_LDFLAGS += -Wl,--gc-sections -flto
 
 include $(BUILD_SHARED_LIBRARY)
