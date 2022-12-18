@@ -2394,7 +2394,7 @@ void idPlayer::RestorePersistantInfo( void ) {
 
 	inventory.RestoreInventory( this, spawnArgs );
 	health = spawnArgs.GetInt( "health", "100" );
-	extraammo = spawnArgs.GetBool( "extraammo", 0 );
+	extraammo = spawnArgs.GetBool( "extraammo", "0" );
 	if ( !gameLocal.isClient ) {
 		idealWeapon = spawnArgs.GetInt( "current_weapon", "1" );
 	}
