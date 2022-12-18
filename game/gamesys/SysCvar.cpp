@@ -358,7 +358,7 @@ idCVar g_grabberDamping(			"g_grabberDamping",			"0.5",			CVAR_GAME | CVAR_FLOAT
 
 
 // HDR related - J.C.Denton
-idCVar r_HDR_enable					( "r_HDR_enable",					"1",			CVAR_GAME | CVAR_ARCHIVE | CVAR_BOOL, " Enables HDR Rendering & post-processing.");
+idCVar r_HDR_enable					( "r_HDR_enable",					"0",			CVAR_GAME | CVAR_ARCHIVE | CVAR_BOOL, " Enables HDR Rendering & post-processing.");
 idCVar r_HDR_enableDebugMode		( "r_HDR_enableDebugMode",			"0",			CVAR_GAME | CVAR_INTEGER, " Shows all the textures generated for HDR postprocess. \n 1: Shows all textures \n 2: Decodes and shows all textures");
 idCVar r_HDR_postProcess			( "r_HDR_postProcess",				"1",			CVAR_GAME | CVAR_INTEGER, " Activates HDR bloom . \n 1: HDR Bloom with automatic eye exposure ");
 idCVar r_HDR_middleGray				( "r_HDR_middleGray",				"0.1",			CVAR_GAME | CVAR_FLOAT,	" Middle gray value for overall scene . Range 0 - 1. (Works only when automatic exposure is on) ");
