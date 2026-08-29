@@ -1,10 +1,21 @@
-#include "../idlib/precompiled.h"
+//#include "../idlib/precompiled.h"
 #pragma hdrstop
 
 #ifdef _D3XP
 
 #include "Game_local.h"
 #include "Misc.h"
+
+
+#include "sys/platform.h"
+
+#include "gamesys/SysCvar.h"
+#include "ai/AI.h"
+#include "Player.h"
+#include "Moveable.h"
+#include "Misc.h"
+
+#include "Grabber.h"
 
 #define MAX_DRAG_TRACE_DISTANCE			384.0f
 #define TRACE_BOUNDS_SIZE				3.f

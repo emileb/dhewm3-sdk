@@ -284,7 +284,7 @@ idGameLocal::Init
   initialize the game object, only happens once at startup, not each level load
 ============
 */
-void idGameLocal::Init( void ) {
+void idGameLocal::Init( int gameMod ) {
 	const idDict *dict;
 	idAAS *aas;
 
@@ -4820,3 +4820,40 @@ idStr idGameLocal::GetHellSkin( int num )
 	return name;
 }
 // <---sikk
+
+#ifdef __ANDROID__
+int idGameLocal::GetExtraData( ExtraData cmd )
+{
+	switch (cmd)
+	{
+		case GET_GUI_ACTIVE:
+			return !!( GetLocalPlayer() && GetLocalPlayer()->GuiActive() );
+		case GET_IN_CINEMATIC:
+			return inCinematic;
+		case GET_OBJECTIVE_ACTIVE:
+			return !!( GetLocalPlayer() && GetLocalPlayer()->objectiveSystemOpen );
+	}
+
+	return -1;
+}
+#endif
+
+#ifdef AIM_ASSIST
+/*
+========================
+idGameLocal::GetAimAssistAngles
+========================
+*/
+void idGameLocal::GetAimAssistAngles( idAngles & angles ) {
+	angles.Zero();
+}
+
+/*
+========================
+idGameLocal::GetAimAssistSensitivity
+========================
+*/
+float idGameLocal::GetAimAssistSensitivity() {
+	return 1;
+}
+#endif
