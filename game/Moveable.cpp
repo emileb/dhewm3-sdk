@@ -394,7 +394,7 @@ void idMoveable::Killed( idEntity *inflictor, idEntity *attacker, int damage, co
 		SetState( func );
 		UpdateScript();
 	}
-
+#ifndef __ANDROID__// DO NOT spawn debris as it extremaly slow, some bug with the BSP tree?
 	const idKeyValue *kv = spawnArgs.MatchPrefix( "def_debris" );
 	// bool first = true;
 	while ( kv ) {
@@ -428,7 +428,7 @@ void idMoveable::Killed( idEntity *inflictor, idEntity *attacker, int damage, co
 		}
 		kv = spawnArgs.MatchPrefix( "def_debris", kv );
 	}
-
+#endif
 	if ( renderEntity.gui[ 0 ] ) {
 		renderEntity.gui[ 0 ] = NULL;
 	}

@@ -320,7 +320,7 @@ public:
 
 							idGameLocal();
 
-	virtual void			Init( void );
+	virtual void			Init( int gameMod );
 	virtual void			Shutdown( void );
 	virtual void			SetLocalClient( int clientNum );
 	virtual void			ThrottleUserInfo( void );
@@ -359,6 +359,15 @@ public:
 	virtual void			SwitchTeam( int clientNum, int team );
 
 	virtual bool			DownloadRequest( const char *IP, const char *guid, const char *paks, char urls[ MAX_STRING_CHARS ] );
+
+#ifdef __ANDROID__
+	virtual int				GetExtraData( ExtraData cmd );
+#endif
+
+#ifdef AIM_ASSIST
+	virtual void			GetAimAssistAngles( idAngles & angles );
+	virtual float			GetAimAssistSensitivity();
+#endif
 
 	// ---------------------- Public idGameLocal Interface -------------------
 

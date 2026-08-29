@@ -122,7 +122,7 @@ idCVar g_debugMover(				"g_debugMover",				"0",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar g_debugTriggers(				"g_debugTriggers",			"0",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar g_debugCinematic(			"g_debugCinematic",			"0",			CVAR_GAME | CVAR_BOOL, "" );
 idCVar g_stopTime(					"g_stopTime",				"0",			CVAR_GAME | CVAR_BOOL, "" );
-idCVar g_damageScale(				"g_damageScale",			"1",			CVAR_GAME | CVAR_FLOAT | CVAR_ARCHIVE, "scale final damage on player by this factor" );
+idCVar g_damageScale(				"g_damageScale",			"1",			CVAR_GAME | CVAR_FLOAT, "scale final damage on player by this factor" ); // Removed CVAR_ARCHIVE, otherwise it saves the config file everytime you take damage!!
 idCVar g_armorProtection(			"g_armorProtection",		"1",			CVAR_GAME | CVAR_FLOAT | CVAR_ARCHIVE, "armor takes this percentage of damage" ); // HEXEN : Zeroth - 0.3 to 1
 idCVar g_armorProtectionMP(			"g_armorProtectionMP",		"1",			CVAR_GAME | CVAR_FLOAT | CVAR_ARCHIVE, "armor takes this percentage of damage in mp" ); // HEXEN : Zeroth - 0.6 to 1
 idCVar g_useDynamicProtection(		"g_useDynamicProtection",	"1",			CVAR_GAME | CVAR_BOOL | CVAR_ARCHIVE, "scale damage and armor dynamically to keep the player alive more often" );
