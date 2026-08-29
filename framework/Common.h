@@ -112,6 +112,8 @@ struct MemInfo_t {
 
 class idLangDict;
 
+class idGame;
+
 class idCommon {
 public:
 	virtual						~idCommon( void ) {}
@@ -213,6 +215,7 @@ public:
 	virtual int					KeyState( int key ) = 0;
 
 
+	virtual idGame *			Game() = 0;
 	/* Some Mods (like Ruiner and DarkMod when it still was a mod) used "SourceHook"
 	 * to override Doom3 Methods to call their own code before the original method
 	 * was executed.. this is super ugly and probably not super portable either.
